@@ -7,8 +7,9 @@
     </div>
     <transition-group name="board-squares" tag="div" class="board">
       <div class="square piece" v-for="(square, squareIndex) in board"
-          v-bind:key="square.id" v-on:click="squareSelected(squareIndex)">
-            <!-- {{ getPositionString(colIndex, rowIndex) }} -->
+          v-bind:key="square.id" v-on:click="squareSelected(squareIndex)"
+          :class="{ 'available': isAvailableMove(squareIndex) }">
+            <!-- {{ getPositionStringForIndex(squareIndex) }} -->
             <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
         </div>
     </transition-group>
@@ -21,6 +22,11 @@
 
 <style scoped lang="scss">
 @import '../../_variables';
+
+.available {
+  outline: solid 5px red;
+
+}
 
 .chessboard-container {
   color: white;

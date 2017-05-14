@@ -7,12 +7,12 @@ export default {
       chess: Chess(),
       msg: 'Welcome to Your Vue.js App',
       board: [],
-      selectedIndex: -1
+      selectedIndex: -1,
+      moves: {}
     }
   },
   created () {
     this.board = this.chess.board()
-    console.log(this.board)
     this.board = this.transformBoardToArray(this.board)
   },
   methods: {
@@ -26,8 +26,10 @@ export default {
           })
         }
       }
-      console.log(boardArray)
       return boardArray
+    },
+    isAvailableMove (index) {
+      return (this.moves[index] === true)
     },
     getCoordinates (index) {
       let row = Math.floor(index / 8)
@@ -43,15 +45,31 @@ export default {
         return true
       }
     },
-    getPositionString (row, column) {
+    getPositionStringForIndex (index) {
+      let { row, column } = this.getCoordinates(index)
+      const number = Math.abs(row - 7) + 1
+      const letter = String.fromCharCode(97 + column)
+      return `${letter}${number}`
+    },
+    getPositionStringForXY (row, column) {
       const number = Math.abs(column - 7) + 1
       const letter = String.fromCharCode(97 + row)
       return `${letter}${number}`
     },
-    getValueForRow (positionString = 'a1') {
-      const row = positionString.toLowerCase().charCodeAt(0) - 97
-      const column = Number.parseInt(positionString.charCodeAt(1)) - 1
-      return { column, row }
+    getIndexForPositionString (positionString = 'a1') {
+      console.log(positionString)
+      const { row, column } = this.getCoordinatesForPositionString(positionString)
+      let index = Math.abs(column - 8) + (row * 8)
+      console.log({ row, column })
+      console.log(index)
+
+      index = Math.abs(index - 64)
+      return index
+    },
+    getCoordinatesForPositionString (positionString = 'a1') {
+      const column = positionString.toLowerCase().charCodeAt(0) - 97
+      const row = Number.parseInt(positionString[1]) - 1
+      return { row, column }
     },
     getIcon (square) {
       if (square.piece) {
@@ -64,12 +82,49 @@ export default {
       this.$set(this.board, oldIndex, temp)
     },
     squareSelected (index) {
-      console.log(index)
+      this.moves = {}
+
       if (this.selectedIndex > 0) {
-        this.swap(index, this.selectedIndex)
+        const source = this.selectedIndex
+        const target = index
+
+        const sourceStr = this.getPositionStringForIndex(source)
+        const targetStr = this.getPositionStringForIndex(target)
+
+        const result = this.chess.move({
+          from: sourceStr,
+          to: targetStr,
+          promotion: 'q'
+        })
+
+        console.log(this.chess.ascii())
+
+        if (result) {
+          this.swap(target, source)
+        } else {
+          console.log('invalid move!')
+        }
+
+        const newBoard = this.chess.board()
+        const newBoardArray = this.transformBoardToArray(newBoard)
+
+        // Sync board
+        for (let i = 0; i < newBoardArray.length; i++) {
+          if (this.board[i].piece !== newBoardArray[i].piece) {
+            this.board[i].piece = newBoardArray[i].piece
+          }
+        }
+
         this.selectedIndex = -1
       } else {
         this.selectedIndex = index
+        const moves = this.chess.moves({
+          square: this.getPositionStringForIndex(index),
+          verbose: true
+        })
+        for (let move of moves) {
+          this.$set(this.moves, this.getIndexForPositionString(move.to), true)
+        }
       }
     }
   }
