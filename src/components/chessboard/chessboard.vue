@@ -1,14 +1,14 @@
 <template>
   <div class="chessboard-container">
     <div class="board board-background">
-      <div class="square" v-for="(square, squareIndex) in board"
+      <div class="square" v-for="(square, squareIndex) in renderedBoard"
         :class="isPrimarySquareColor(squareIndex) ? 'board-square-light' : 'board-square-dark'">
       </div>
     </div>
     <transition-group name="board-squares" tag="div" class="board">
-      <div class="square piece" v-for="(square, squareIndex) in board"
+      <div class="square piece" v-for="(square, squareIndex) in renderedBoard"
           v-bind:key="square.id" v-on:click="squareSelected(squareIndex)"
-          :class="{ 'available': isAvailableMove(squareIndex) }">
+          :class="{ 'highlighted': isAvailableMove(squareIndex) || (selectedIndex === squareIndex) }">
             <!-- {{ getPositionStringForIndex(squareIndex) }} -->
             <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
         </div>
@@ -23,9 +23,8 @@
 <style scoped lang="scss">
 @import '../../_variables';
 
-.available {
-  outline: solid 5px red;
-
+.highlighted {
+  background: rgba(65, 65, 240, 0.5);
 }
 
 .chessboard-container {
