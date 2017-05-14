@@ -1,3 +1,7 @@
+@import '../node_modules/skeleton-css/css/normalize.css';
+@import '../node_modules/skeleton-css/css/skeleton.css';
+@import './_variables.scss';
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
