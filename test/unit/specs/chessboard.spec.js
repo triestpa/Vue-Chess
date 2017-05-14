@@ -5,7 +5,7 @@ describe('chessboard.vue', () => {
   it('should render correct contents', () => {
     const Constructor = Vue.extend(Chessboard)
     const vm = new Constructor().$mount()
-    expect(vm.$el.querySelectorAll('.board-square').length)
-      .to.equal(64)
+    expect(vm.$el.querySelectorAll('.square').length)
+      .to.equal(128)
   })
 })

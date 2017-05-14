@@ -7,7 +7,7 @@ export default {
       chess: Chess(),
       msg: 'Welcome to Your Vue.js App',
       board: [],
-      selectedIndex: -1,
+      selectedIndex: -1
     }
   },
   created () {
