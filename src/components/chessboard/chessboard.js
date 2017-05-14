@@ -12,10 +12,33 @@ export default {
   created () {
     this.board = this.chess.board()
     console.log(this.board)
+    this.board = this.transformBoardToArray(this.board)
   },
   methods: {
-    isPrimarySquareColor (row, col) {
-      if ((row + col) % 2 === 0) {
+    transformBoardToArray (board) {
+      const boardArray = []
+      for (let row of board) {
+        for (let square of row) {
+          boardArray.push({
+            id: Math.floor(Math.random() * 1000),
+            piece: square
+          })
+        }
+      }
+      console.log(boardArray)
+      return boardArray
+    },
+    getCoordinates (index) {
+      let row = Math.floor(index / 8)
+      let column = index % 8
+      return {
+        row,
+        column
+      }
+    },
+    isPrimarySquareColor (index) {
+      let { row, column } = this.getCoordinates(index)
+      if ((row + column) % 2 === 0) {
         return true
       }
     },
@@ -30,10 +53,14 @@ export default {
       return { column, row }
     },
     getIcon (square) {
-      if (square) {
-        return require(`../../assets/icons/${square.color}${square.type}.svg`)
+      if (square.piece) {
+        return require(`../../assets/icons/${square.piece.color}${square.piece.type}.svg`)
       }
+    },
+    swap (oldIndex = 0, newIndex = 0) {
+      const temp = this.board[newIndex]
+      this.$set(this.board, newIndex, this.board[oldIndex])
+      this.$set(this.board, oldIndex, temp)
     }
   }
 }
-

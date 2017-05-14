@@ -1,15 +1,18 @@
 <template>
   <div class="chessboard-container">
-    <div class="board">
-      <div class="row" v-for="(row, rowIndex) in board">
-        <div v-for="(square, colIndex) in board[rowIndex]"
-            class="board-square"
-            :class="isPrimarySquareColor(colIndex, rowIndex) ? 'board-square-light' : 'board-square-dark'">
-              <!-- {{ getPositionString(colIndex, rowIndex) }} -->
-              <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
-          </div>
-        </div>
+    <div class="board board-background">
+      <div class="square" v-for="(square, squareIndex) in board"
+        :class="isPrimarySquareColor(squareIndex) ? 'board-square-light' : 'board-square-dark'">
       </div>
+    </div>
+    <transition-group name="board-squares" tag="div" class="board">
+      <div class="square piece" v-for="(square, squareIndex) in board"
+          v-bind:key="square.id">
+            <!-- {{ getPositionString(colIndex, rowIndex) }} -->
+            <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
+        </div>
+    </transition-group>
+    <a class="button" v-on:click="swap(0,24)">Swap</a>
     </div>
   </div>
 </template>
@@ -21,19 +24,32 @@
 
 .chessboard-container {
   color: white;
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-grow: 1;
-}
-
-.board {
   width: 50%;
+  position: relative;
   margin: 0 auto;
-  flex-grow: 1;
 
   @include media('medium') {
     width: 100%
   }
+}
+
+.board-squares-move {
+  transition: transform .5s;
+}
+
+.board-background {
+  position: absolute;
+  z-index:-1;
+}
+
+.board {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .piece {
@@ -61,22 +77,25 @@
   max-height: 80%;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-}
-
-.board-square {
+.square {
   width: 6.25vw;
   height: 6.25vw;
+  flex-grow: 0;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
+
 
   @include media('medium') {
     width: 12.5vw;
     height: 12.5vw;
   }
+}
+
+.piece {
+
 }
 
 .board-square-light {
