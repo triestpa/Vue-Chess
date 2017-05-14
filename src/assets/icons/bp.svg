@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="61px" viewBox="0 0 36 61" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>bp</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="bp" transform="translate(-37.000000, -24.000000)">
+            <path d="M55,110 C82.5,110 110,85.3756612 110,55 C110,24.6243388 85.3756612,0 55,0 C24.6243388,0 0,24.6243388 0,55 C0,85.3756612 27.5,110 55,110 Z" id="Oval-Copy-2"></path>
+            <path d="M71.5,71.7 C65.3,64.8 62.2,58.5 61.7,50.9 L69.8,50.9 L69.8,44.5 L65.1,43 C66.6,40.9 67.4,38.3 67.4,35.7 C67.4,28.9 62,24 54.5,24 C47,24 41.6,28.9 41.6,35.7 C41.6,38.4 42.4,40.9 43.9,43 L39.3,44.5 L39.3,50.9 L47.4,50.9 C46.8,58.4 43.8,64.7 37.6,71.7 L37,72.4 L37,85 L72.2,85 L72.2,72.3 L71.5,71.7 Z" fill="#000000" fill-rule="nonzero"></path>
+        </g>
+    </g>
+</svg>

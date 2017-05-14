@@ -1,0 +1,14 @@
+machine:
+  node:
+    version: 7.10.0
+dependencies:
+  override:
+    - npm install
+compile:
+  override:
+    - npm run build
+deployment:
+  prod:
+    branch: master
+    commands:
+      - aws s3 sync dist s3://chess.patricktriest.com --delete

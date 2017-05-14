@@ -1,0 +1,18 @@
+$break-small: 320px;
+$break-medium: 756px;
+$break-wide: 1024px;
+
+@mixin media($media) {
+  @if $media == "mobile" {
+    @media only screen and (max-width: $break-small) { @content; }
+  }
+  @else if $media == "medium" {
+    @media only screen and (min-width: $break-small + 1) and (max-width: $break-medium - 1) { @content; }
+  }
+  @else if $media == "standard" {
+    @media only screen and (min-width: $break-medium + 1) and (max-width: $break-wide - 1) { @content; }
+  }
+  @else if $media == "wide" {
+    @media only screen and (min-width: $break-wide) { @content; }
+  }
+}
