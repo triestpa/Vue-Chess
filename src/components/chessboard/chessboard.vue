@@ -7,7 +7,7 @@
     </div>
     <transition-group name="board-squares" tag="div" class="board">
       <div class="square piece" v-for="(square, squareIndex) in board"
-          v-bind:key="square.id">
+          v-bind:key="square.id" v-on:click="squareSelected(squareIndex)">
             <!-- {{ getPositionString(colIndex, rowIndex) }} -->
             <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
         </div>

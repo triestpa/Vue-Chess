@@ -6,7 +6,8 @@ export default {
     return {
       chess: Chess(),
       msg: 'Welcome to Your Vue.js App',
-      board: []
+      board: [],
+      selectedIndex: -1,
     }
   },
   created () {
@@ -61,6 +62,15 @@ export default {
       const temp = this.board[newIndex]
       this.$set(this.board, newIndex, this.board[oldIndex])
       this.$set(this.board, oldIndex, temp)
+    },
+    squareSelected (index) {
+      console.log(index)
+      if (this.selectedIndex > 0) {
+        this.swap(index, this.selectedIndex)
+        this.selectedIndex = -1
+      } else {
+        this.selectedIndex = index
+      }
     }
   }
 }
