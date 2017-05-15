@@ -1,7 +1,7 @@
 import Chess from 'chess.js'
 
 export default class ChesssGame {
-  constructor (pgn = undefined, side = 'white') {
+  constructor (pgn = undefined, side = 'w') {
     this.game = Chess()
 
     if (pgn) {
@@ -12,7 +12,7 @@ export default class ChesssGame {
   }
 
   setSide (side) {
-    this.reversed = (side === 'black')
+    this.reversed = (side === 'b')
   }
 
   reverse () {
@@ -22,6 +22,11 @@ export default class ChesssGame {
   reset () {
     this.game.reset()
     this.reversed = false
+  }
+
+  getTurn () {
+    console.log(this.game.turn())
+    return this.game.turn()
   }
 
   getPGN () {

@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="38px" height="63px" viewBox="0 0 38 63" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="264px" height="264px" viewBox="0 0 264 264" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
     <title>wp</title>
     <desc>Created with Sketch.</desc>
-    <defs></defs>
+    <defs>
+        <circle id="path-1" cx="128" cy="128" r="128"></circle>
+        <filter x="-4.5%" y="-4.5%" width="109.0%" height="109.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="10" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="1.5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="2" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <path d="M163.890766,165.162016 C150.611846,150.383863 143.972386,136.890766 142.901505,120.61338 L160.249772,120.61338 L160.249772,106.906108 L150.183494,103.693466 C153.396136,99.1957668 155.109545,93.6271873 155.109545,88.0586078 C155.109545,73.4946306 143.544034,63 127.480824,63 C111.417613,63 99.8521022,73.4946306 99.8521022,88.0586078 C99.8521022,93.8413634 101.565511,99.1957668 104.778153,103.693466 L94.9260511,106.906108 L94.9260511,120.61338 L112.274318,120.61338 C110.989261,136.67659 104.563977,150.169687 91.2850568,165.162016 L90,166.661249 L90,193.647442 L165.389999,193.647442 L165.389999,166.447073 L163.890766,165.162016 Z" id="path-3"></path>
+        <filter x="-10.6%" y="-6.1%" width="121.2%" height="112.2%" filterUnits="objectBoundingBox" id="filter-4">
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="5" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="wp" transform="translate(-36.000000, -23.000000)">
-            <circle id="Oval-Copy-2" cx="55" cy="55" r="55"></circle>
-            <path d="M71.5,71.7 C65.3,64.8 62.2,58.5 61.7,50.9 L69.8,50.9 L69.8,44.5 L65.1,43 C66.6,40.9 67.4,38.3 67.4,35.7 C67.4,28.9 62,24 54.5,24 C47,24 41.6,28.9 41.6,35.7 C41.6,38.4 42.4,40.9 43.9,43 L39.3,44.5 L39.3,50.9 L47.4,50.9 C46.8,58.4 43.8,64.7 37.6,71.7 L37,72.4 L37,85 L72.2,85 L72.2,72.3 L71.5,71.7 Z" id="bp" stroke="#000000" stroke-width="2" fill="#FFFFFF" fill-rule="nonzero"></path>
+        <g id="wp" transform="translate(4.000000, 4.000000)">
+            <g id="Oval-Copy-2">
+                <use fill="#303030" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                <use stroke="#EAEAEA" stroke-width="8" xlink:href="#path-1"></use>
+            </g>
+            <g id="bp" fill-rule="nonzero">
+                <use fill="#EAEAEA" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+            </g>
         </g>
     </g>
 </svg>

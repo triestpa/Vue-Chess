@@ -12,7 +12,8 @@ export default {
   data () {
     return {
       pgn: undefined,
-      side: 'white'
+      side: 'w',
+      twoplayer: true
     }
   },
   computed: {
@@ -24,22 +25,25 @@ export default {
   },
   created () {
     const chess = this.newGame()
-    chess.move('e4')
     this.pgn = chess.pgn()
   },
   methods: {
     boardChange (pgn) {
       this.pgn = pgn
+
+      if (this.twoplayer) {
+        setTimeout(this.swapSides, 1000)
+      }
     },
     newGame () {
       const chess = Chess()
       return chess
     },
     swapSides () {
-      if (this.side === 'white') {
-        this.side = 'black'
+      if (this.side === 'w') {
+        this.side = 'b'
       } else {
-        this.side = 'white'
+        this.side = 'w'
       }
     },
     randomMove () {

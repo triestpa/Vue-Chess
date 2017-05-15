@@ -11,9 +11,11 @@
           v-for="(square, squareIndex) in renderedBoard"
           v-bind:key="square.id"
           v-on:click="squareSelected(squareIndex)"
-          :class="{ 'highlighted': isAvailableMove(squareIndex) || (selectedIndex === squareIndex) }">
+          :class="{ 'highlighted-red': isAvailableMove(squareIndex) && square.piece,
+                    'highlighted-yellow': (selectedIndex === squareIndex) }">
             <!-- {{ getPositionStringForIndex(squareIndex) }} -->
-            <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
+            <i class="circle" v-if="isAvailableMove(squareIndex) && !square.piece"/>
+            <img class="piece" :src="getIcon(square)">
         </div>
     </transition-group>
     </div>
@@ -25,8 +27,27 @@
 <style scoped lang="scss">
 @import '../../_variables';
 
-.highlighted {
+.highlighted-yellow {
+  background: rgba(234, 136, 37, 1);
+}
+
+.highlighted-green {
+  background: rgba(65, 240, 65, 0.2);
+}
+
+.highlighted-blue {
   background: rgba(65, 65, 240, 0.5);
+}
+
+.highlighted-red {
+  background: rgba(180, 0, 0, 1);
+}
+
+.circle {
+	border-radius: 50%;
+	width: 30%;
+	height: 30%;
+  background: rgba(234, 136, 37, 1);
 }
 
 .chessboard-container {
@@ -61,27 +82,10 @@
 
 .piece {
   max-width: 80%;
-  max-height: 90%;
 }
 
 .mainpiece {
   padding-bottom: 5px;
-}
-
-.p {
-  max-height: 70%;
-}
-
-.r {
-  max-height: 70%;
-}
-
-.b {
-  max-height: 80%;
-}
-
-.n {
-  max-height: 80%;
 }
 
 .square {
@@ -106,12 +110,12 @@
 }
 
 .board-square-light {
-  background: #B6B6B6;
+  background: #A77C51;
 
 }
 
 .board-square-dark {
-  background: #843F3F;
+  background: #602B16;
 }
 
 </style>

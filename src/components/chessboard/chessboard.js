@@ -31,13 +31,16 @@ export default {
       } else {
         return this.board
       }
+    },
+    turn () {
+      this.chessGame.getTurn()
     }
   },
   created () {
     this.createGame()
     this.board = this.chessGame.getBoard()
 
-    if (this.side === 'black') {
+    if (this.side === 'b') {
       this.chessGame.reversed = true
     }
   },
