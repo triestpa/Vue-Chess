@@ -1,14 +1,18 @@
 import Chess from '../assets/js/chess.js'
 
-export default class game {
+export default class ChessGame {
   constructor () {
     this.game = Chess()
-    this.board = this.transformBoardToArray(this.game.board())
     this.reversed = false
   }
 
   reverse () {
     this.reversed = !this.reversed
+  }
+
+  reset () {
+    this.game.reset()
+    this.reversed = false
   }
 
   getBoard () {
