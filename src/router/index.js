@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Chessboard from '@/components/chessboard/chessboard.vue'
+import Chess from '@/pages/chess/chess.vue'
 
 Vue.use(Router)
 
@@ -9,8 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Chessboard',
-      component: Chessboard
+      name: 'Chess',
+      component: Chess
     }
   ]
 })
