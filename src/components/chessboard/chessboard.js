@@ -1,12 +1,24 @@
-import ChessGame from '../../classes/chessgame'
+import ChessGame from './utils/chessgame'
+
+// outputs -> ongameend, oncapture, onstatechange
 
 export default {
   name: 'chessboard',
+  props: {
+    pgn: {
+      type: String,
+      default: null
+    },
+    side: {
+      type: String,
+      default: 'white'
+    }
+  },
   data () {
     return {
-      chessGame: new ChessGame(),
+      chessGame: null,
       board: [],
-      moves: {},
+      availableMoves: {},
       selectedIndex: -1
     }
   },
@@ -22,9 +34,39 @@ export default {
     }
   },
   created () {
+    this.createGame()
     this.board = this.chessGame.getBoard()
+
+    if (this.side === 'black') {
+      this.chessGame.reversed = true
+    }
+  },
+  watch: {
+    'pgn': function (newVal, oldVal) {
+      const newChess = new ChessGame(newVal)
+      const moveHistory = newChess.getHistory()
+
+      if (moveHistory.length === this.chessGame.getHistory().length + 1) {
+        this.applyNewMove(moveHistory[this.chessGame.getHistory().length])
+      } else {
+        this.createGame()
+        this.syncBoard()
+      }
+    },
+    'side': function (newVal, oldVal) {
+      this.chessGame.setSide(newVal)
+    }
   },
   methods: {
+    applyNewMove (newMove) {
+      const srcIndex = this.chessGame.getIndexForPositionString(newMove.from)
+      const targetIndex = this.chessGame.getIndexForPositionString(newMove.to)
+      this.movePiece(srcIndex, targetIndex)
+    },
+
+    createGame () {
+      this.chessGame = new ChessGame(this.pgn, this.side)
+    },
     /** Flip board */
     switchSides () {
       this.chessGame.reverse()
@@ -32,7 +74,7 @@ export default {
 
     /** Check is a square is an available move */
     isAvailableMove (index) {
-      return (this.moves[index] === true)
+      return (this.availableMoves[index] === true)
     },
 
     /** Get the icon for the piece */
@@ -56,19 +98,16 @@ export default {
     },
 
     /** Move a piece to the target index, if move is valid */
-    movePiece (index) {
-      const source = this.selectedIndex
-      const target = index
-
+    movePiece (source, target) {
       const result = this.chessGame.calculateMove(source, target)
-      console.log(this.chessGame.game.ascii())
 
+      // if result is undefined, move is invalid
       if (result) {
         this.swap(target, source)
         this.syncBoard()
-        // setTimeout(this.switchSides, 1000)
-      } else {
-        console.log('invalid move!')
+
+        // waiting 200ms improves animation performance
+        setTimeout(() => this.$emit('move', this.chessGame.getPGN()), 200)
       }
     },
 
@@ -106,16 +145,16 @@ export default {
         this.selectedIndex = -1
       } else {
         for (let move of moves) {
-          this.$set(this.moves, move, true)
+          this.$set(this.availableMoves, move, true)
         }
       }
     },
 
     /** On-click for square, select square or try move if suqare is selected  */
     squareSelected (index) {
-      this.moves = {}
+      this.availableMoves = {}
       if (this.selectedIndex > 0) {
-        this.movePiece(index)
+        this.movePiece(this.selectedIndex, index)
         this.selectedIndex = -1
       } else {
         this.getAvailableMoves(index)

@@ -1,9 +1,18 @@
-import Chess from '../assets/js/chess.js'
+import Chess from 'chess.js'
 
-export default class ChessGame {
-  constructor () {
+export default class ChesssGame {
+  constructor (pgn = undefined, side = 'white') {
     this.game = Chess()
-    this.reversed = false
+
+    if (pgn) {
+      this.game.load_pgn(pgn)
+    }
+
+    this.setSide(side)
+  }
+
+  setSide (side) {
+    this.reversed = (side === 'black')
   }
 
   reverse () {
@@ -13,6 +22,14 @@ export default class ChessGame {
   reset () {
     this.game.reset()
     this.reversed = false
+  }
+
+  getPGN () {
+    return this.game.pgn()
+  }
+
+  getHistory () {
+    return this.game.history({ verbose: true })
   }
 
   getBoard () {

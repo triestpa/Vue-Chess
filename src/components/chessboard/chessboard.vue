@@ -16,7 +16,6 @@
             <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
         </div>
     </transition-group>
-    <a class="button" v-on:click="reset()">Reset</a>
     </div>
   </div>
 </template>
@@ -44,7 +43,7 @@
 }
 
 .board-squares-move {
-  transition: transform .5s;
+  transition: transform .3s;
 }
 
 .board-background {
