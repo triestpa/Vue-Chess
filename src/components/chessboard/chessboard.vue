@@ -2,7 +2,7 @@
   <div class="chessboard-container">
     <div class="board board-background">
       <div class="square" v-for="(square, squareIndex) in renderedBoard"
-        :class="isPrimarySquareColor(squareIndex) ? 'board-square-light' : 'board-square-dark'">
+        :class="chessGame.isPrimarySquareColor(squareIndex) ? 'board-square-light' : 'board-square-dark'">
       </div>
     </div>
     <transition-group name="board-squares" tag="div" class="board">
