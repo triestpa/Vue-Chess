@@ -1,19 +1,22 @@
 <template>
   <div class="chessboard-container">
     <div class="board board-background">
-      <div class="square" v-for="(square, squareIndex) in renderedBoard"
+      <div class="square"
+        v-for="(square, squareIndex) in renderedBoard"
         :class="chessGame.isPrimarySquareColor(squareIndex) ? 'board-square-light' : 'board-square-dark'">
       </div>
     </div>
     <transition-group name="board-squares" tag="div" class="board">
-      <div class="square piece" v-for="(square, squareIndex) in renderedBoard"
-          v-bind:key="square.id" v-on:click="squareSelected(squareIndex)"
+      <div class="square piece"
+          v-for="(square, squareIndex) in renderedBoard"
+          v-bind:key="square.id"
+          v-on:click="squareSelected(squareIndex)"
           :class="{ 'highlighted': isAvailableMove(squareIndex) || (selectedIndex === squareIndex) }">
             <!-- {{ getPositionStringForIndex(squareIndex) }} -->
             <img class="piece" :src="getIcon(square)" :class="square ? square.type: ''">
         </div>
     </transition-group>
-    <a class="button" v-on:click="swap(0,24)">Swap</a>
+    <a class="button" v-on:click="reset()">Reset</a>
     </div>
   </div>
 </template>
