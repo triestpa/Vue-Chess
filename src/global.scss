@@ -19,3 +19,7 @@ html, body {
   display: flex;
   flex-direction: column;
 }
+
+.button {
+  user-select: none;
+}

@@ -1,5 +1,7 @@
 # chess-frontend
 
+![](https://circleci.com/gh/triestpa/chess-frontend.png?style=shield&circle-token=f7e5adc79165f5989889670689bd82348a7d9b38)
+
 > A VueJS chess app.
 
 ## Build Setup

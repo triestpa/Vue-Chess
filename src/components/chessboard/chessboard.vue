@@ -1,22 +1,27 @@
 <template>
   <div class="chessboard-container">
-    <div class="board board-background">
+    <div ref="board" class="board board-background">
       <div class="square"
-        v-for="(square, squareIndex) in renderedBoard"
-        :class="chessGame.isPrimarySquareColor(squareIndex) ? 'board-square-light' : 'board-square-dark'">
+          v-for="(square, squareIndex) in board"
+          :style="squareStyle"
+          :class="{
+            'board-square-dark': !chessGame.isSquareLight(squareIndex),
+            'board-square-light': chessGame.isSquareLight(squareIndex),
+            'highlighted-red': isAvailableMove(squareIndex) && square.piece,
+            'highlighted-yellow': (selectedIndex === squareIndex)
+            }">
+        <i  class="circle" v-if="isAvailableMove(squareIndex) && !square.piece"/>
       </div>
     </div>
     <transition-group name="board-squares" tag="div" class="board">
-      <div class="square piece"
-          v-for="(square, squareIndex) in renderedBoard"
-          v-bind:key="square.id"
-          v-on:click="squareSelected(squareIndex)"
-          :class="{ 'highlighted-red': isAvailableMove(squareIndex) && square.piece,
-                    'highlighted-yellow': (selectedIndex === squareIndex) }">
-            <!-- {{ getPositionStringForIndex(squareIndex) }} -->
-            <i class="circle" v-if="isAvailableMove(squareIndex) && !square.piece"/>
-            <img class="piece" :src="getIcon(square)">
-        </div>
+      <div class="square"
+            v-on:dragover="dragOver(squareIndex)"
+            v-for="(square, squareIndex) in board"
+            :key="square.id"
+            :style="squareStyle"
+            v-on:click="squareSelected(squareIndex)">
+          <img draggable="true" v-on:dragstart="drag(squareIndex)" v-if="square.piece" class="piece" :src="getIcon(square)">
+      </div>
     </transition-group>
     </div>
   </div>
@@ -25,7 +30,14 @@
 <script src="./chessboard.js"></script>
 
 <style scoped lang="scss">
-@import '../../_variables';
+
+.board-square-light {
+  background: #A77C51;
+}
+
+.board-square-dark {
+  background: #602B16;
+}
 
 .highlighted-yellow {
   background: rgba(234, 136, 37, 1);
@@ -54,13 +66,9 @@
   color: white;
   flex-direction: row;
   flex-grow: 1;
-  width: 50%;
+  flex-shrink: 0;
   position: relative;
   margin: 0 auto;
-
-  @include media('medium') {
-    width: 100%
-  }
 }
 
 .board-squares-move {
@@ -82,6 +90,7 @@
 
 .piece {
   max-width: 80%;
+  cursor: grab;
 }
 
 .mainpiece {
@@ -89,33 +98,12 @@
 }
 
 .square {
-  width: 6.25vw;
-  height: 6.25vw;
   flex-grow: 0;
   margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
-
-
-  @include media('medium') {
-    width: 12.5vw;
-    height: 12.5vw;
-  }
-}
-
-.piece {
-
-}
-
-.board-square-light {
-  background: #A77C51;
-
-}
-
-.board-square-dark {
-  background: #602B16;
 }
 
 </style>

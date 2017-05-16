@@ -1,89 +1,121 @@
 import ChessGame from './utils/chessgame'
 
-// outputs -> ongameend, oncapture, onstatechange
-
+/**
+ * Chessboard VueJS Component.
+ * Takes a PGN string and a side (w or b) as props
+ */
 export default {
   name: 'chessboard',
   props: {
-    pgn: {
+    pgn: { // PGN is a string encoded with the current game state
       type: String,
       default: null
     },
-    side: {
+    side: { // Side is either 'w' or 'b', and determines which board orientation to display
       type: String,
-      default: 'white'
+      default: 'w'
+    },
+    iconDir: {
+      type: String,
+      default: 'static/icons/'
     }
   },
   data () {
     return {
-      chessGame: null,
-      board: [],
-      availableMoves: {},
-      selectedIndex: -1
+      chessGame: null, // the game logic class
+      availableMoves: {}, // key/value obj of available moves
+      selectedIndex: -1, // the currently selected square index
+      squareStyle: { // Square style - values will be reset whenever window is resized
+        height: '100px',
+        width: '100px'
+      }
     }
   },
   computed: {
-    // Return the board array to be displayed
-    renderedBoard () {
-      // If board is flipped, get reversed array
-      if (this.chessGame.reversed) {
-        return this.getReversedBoard()
-      } else {
-        return this.board
-      }
+    /** Return the board array to be displayed.  Board is an array of squares, some with pieces */
+    board () {
+      return this.chessGame.getBoard()
     },
+    /** Return 'w' or 'b' if it is white or black's turn respectively */
     turn () {
-      this.chessGame.getTurn()
-    }
-  },
-  created () {
-    this.createGame()
-    this.board = this.chessGame.getBoard()
-
-    if (this.side === 'b') {
-      this.chessGame.reversed = true
+      return this.chessGame.getTurn()
     }
   },
   watch: {
+    /** Watch the PGN property so that the game can receive new moves from outside the component */
     'pgn': function (newVal, oldVal) {
-      const newChess = new ChessGame(newVal)
-      const moveHistory = newChess.getHistory()
-
-      if (moveHistory.length === this.chessGame.getHistory().length + 1) {
-        this.applyNewMove(moveHistory[this.chessGame.getHistory().length])
-      } else {
-        this.createGame()
-        this.syncBoard()
-      }
+      this.syncToPgn(newVal)
     },
+
+    /** Watch the side property so that the UI reflects side-swaps */
     'side': function (newVal, oldVal) {
+      // Set the board orientation whenever the side changes
       this.chessGame.setSide(newVal)
+      this.selectedIndex = -1
+      this.availableMoves = {}
     }
   },
+  created () {
+    // Initialize a new game for the provided pgn and side properties
+    this.chessGame = new ChessGame(this.pgn, this.side)
+  },
+  mounted () {
+    // On mounted,set the square width and hight
+    this.$nextTick(() => {
+      // Reset sqaure size every time window resizes
+      window.addEventListener('resize', this.getSquareStyle)
+      this.getSquareStyle()
+    })
+  },
   methods: {
+    /** Set the square width/height to 1/8 of the total board width */
+    getSquareStyle (event) {
+      const board = this.$refs.board
+      if (board) {
+        // Subtract 1 from total width to avoid pixel-wrapping edge-case
+        const squareEdgeLength = (board.offsetWidth - 1) / 8
+        this.squareStyle = {
+          height: `${squareEdgeLength}px`,
+          width: `${squareEdgeLength}px`
+        }
+      }
+    },
+
+    /** Apply a new move to the board */
     applyNewMove (newMove) {
       const srcIndex = this.chessGame.getIndexForPositionString(newMove.from)
       const targetIndex = this.chessGame.getIndexForPositionString(newMove.to)
       this.movePiece(srcIndex, targetIndex)
     },
 
-    createGame () {
-      this.chessGame = new ChessGame(this.pgn, this.side)
-    },
-    /** Flip board */
-    switchSides () {
-      this.chessGame.reverse()
-    },
-
-    /** Check is a square is an available move */
+    /** Check if a square index is an available move */
     isAvailableMove (index) {
       return (this.availableMoves[index] === true)
+    },
+
+    /** Recieve a new pgn, and sync the displayed board to it */
+    syncToPgn (newPgn) {
+        // Generate a new game with the new pgn
+      const newGame = new ChessGame(newPgn)
+
+      // Get the histories for the two games
+      const newHistory = newGame.getHistory()
+      const oldHistory = this.chessGame.getHistory()
+
+      // If the new pgn is one move ahead of the old, make the connecting move
+      if (newHistory.length === oldHistory.length + 1) {
+        this.applyNewMove(newHistory.pop())
+
+      // Else if they are not the same length, reset the whole board to the new pgn
+      } else if (newHistory.length !== oldHistory.length) {
+        this.chessGame = new ChessGame(this.pgn, this.side)
+      }
     },
 
     /** Get the icon for the piece */
     getIcon (square) {
       if (square.piece) {
-        return require(`../../assets/icons/${square.piece.color}${square.piece.type}.svg`)
+        return this.iconDir + `${square.piece.color}${square.piece.type}.svg`
       }
     },
 
@@ -106,19 +138,28 @@ export default {
 
       // if result is undefined, move is invalid
       if (result) {
-        this.swap(target, source)
-        this.syncBoard()
+        this.swap(target, source) // Swap the contents of the squares
+        this.syncBoard() // Sync the piece position with the board model
+        this.availableMoves = {} // Reset available moves
+        this.selectedIndex = -1 // Reset index
 
-        // waiting 200ms improves animation performance
-        setTimeout(() => this.$emit('move', this.chessGame.getPGN()), 200)
+        // Emit the move to any parent components
+        setTimeout(() => this.$emit('change', this.chessGame.getPGN()), 200)
+      } else {
+        this.selectedIndex = -1
+        this.squareSelected(target)
       }
     },
 
-    /** Sync the displayed board with the chessgame class instance */
+    /** Sync the displayed board with the chessgame object. */
     syncBoard () {
+      /**
+       *  Why not just use "this.board = this.chessGame.getBoard()"? It has to do with
+       *  how Vuejs handles reactivity within arrays.  Long-story-short, in order to sync
+       *  any side-effects from the move, such as castles, promotions, and captures, it is best
+       *  for our purposes to manually assign the changed pieces within the array item.
+      */
       const updatedBoard = this.chessGame.getBoard()
-
-      // This Sync needs to be keep the current square Ids, but sync the peices, to avoid an unwanted animation.
       for (let i = 0; i < updatedBoard.length; i++) {
         if (this.board[i].piece !== updatedBoard[i].piece) {
           this.board[i].piece = updatedBoard[i].piece
@@ -126,31 +167,28 @@ export default {
       }
     },
 
-    /** Return a reversed copy of the current board */
-    getReversedBoard (board) {
-      // This reversal needs to be keep the current square Ids, but reverse the peices, to avoid an unwanted animation.
-      let boardCopy = JSON.parse(JSON.stringify(this.board))
-
-      // Sync board backwards
-      for (let i = 0; i < boardCopy.length; i++) {
-        boardCopy[(boardCopy.length - 1) - i].piece = this.board[i].piece
-      }
-
-      return boardCopy
-    },
-
     /** Display all available moves for the selected piece */
-    getAvailableMoves (index) {
-      this.selectedIndex = index
-      const moves = this.chessGame.getAvailableMoves(index)
+    displayAvailableMoves () {
+      const moves = this.chessGame.getAvailableMoves(this.selectedIndex)
 
       if (moves.length < 1) {
+        // If no available moves, de-select the square
         this.selectedIndex = -1
       } else {
+        // Set each move to true in the available moves dict
         for (let move of moves) {
+          // Use $set for the changes to display instantly in the UI
           this.$set(this.availableMoves, move, true)
         }
       }
+    },
+
+    drag (index) {
+      this.squareSelected(index)
+    },
+
+    dragOver (index) {
+      console.log(index)
     },
 
     /** On-click for square, select square or try move if suqare is selected  */
@@ -158,9 +196,9 @@ export default {
       this.availableMoves = {}
       if (this.selectedIndex > 0) {
         this.movePiece(this.selectedIndex, index)
-        this.selectedIndex = -1
       } else {
-        this.getAvailableMoves(index)
+        this.selectedIndex = index
+        this.displayAvailableMoves()
       }
     }
   }

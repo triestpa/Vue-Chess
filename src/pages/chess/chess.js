@@ -13,7 +13,8 @@ export default {
     return {
       pgn: undefined,
       side: 'w',
-      twoplayer: true
+      twoplayer: false,
+      iconDir: 'static/icons/'
     }
   },
   computed: {
