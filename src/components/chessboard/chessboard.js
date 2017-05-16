@@ -194,7 +194,9 @@ export default {
     /** On-click for square, select square or try move if suqare is selected  */
     squareSelected (index) {
       this.availableMoves = {}
-      if (this.selectedIndex > 0) {
+      if (this.selectedIndex === index) {
+        this.selectedIndex = -1
+      } else if (this.selectedIndex > 0) {
         this.movePiece(this.selectedIndex, index)
       } else {
         this.selectedIndex = index
