@@ -6,6 +6,7 @@
       <a class="button" v-on:click="reset()">Reset</a>
       <a class="button" v-on:click="swapSides()">Swap</a>
       <pre>{{ game.ascii() }}</pre>
+      <chat></chat>
     </div>
   </div>
 </template>
@@ -26,15 +27,13 @@
 
 .chessboard {
   flex: 1;
-  max-width: 50%;
+  flex-basis: 70%;
+  max-width: 100vh;
+}
 
-  @include media('medium') {
-    max-width: 100%
-  }
-
-  .controls {
-    flex: 1
-  }
+.controls {
+  flex: 0;
+  flex-basis: 30%;
 }
 
 </style>

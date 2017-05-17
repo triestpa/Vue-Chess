@@ -14,8 +14,11 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "axios": "0.16.1",
     "chess.js": "git@github.com:jhlywa/chess.js.git#master",
+    "jsencrypt": "2.3.1",
     "skeleton-css": "2.0.4",
+    "socket.io-client": "2.0.1",
     "vue": "^2.2.6",
     "vue-router": "^2.3.1",
     "vuex": "2.3.1"

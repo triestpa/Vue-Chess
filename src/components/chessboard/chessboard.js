@@ -73,7 +73,8 @@ export default {
       const board = this.$refs.board
       if (board) {
         // Subtract 1 from total width to avoid pixel-wrapping edge-case
-        const squareEdgeLength = (board.offsetWidth - 1) / 8
+        let squareEdgeLength = (board.offsetWidth - 1) / 8
+
         this.squareStyle = {
           height: `${squareEdgeLength}px`,
           width: `${squareEdgeLength}px`

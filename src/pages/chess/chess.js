@@ -2,12 +2,15 @@
 // outputs -> onmove, ongameover, oncapture, onstatechange
 
 import Chessboard from '../../components/chessboard/chessboard.vue'
+import Chat from '../../components/chat/chat.vue'
+
 import Chess from 'chess.js'
 
 export default {
   name: 'chess',
   components: {
-    Chessboard
+    Chessboard,
+    Chat
   },
   data () {
     return {
@@ -26,6 +29,7 @@ export default {
   },
   created () {
     const chess = this.newGame()
+    console.log(this.$route.query.page)
     this.pgn = chess.pgn()
   },
   methods: {
