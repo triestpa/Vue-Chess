@@ -9,6 +9,7 @@ export default {
       messages: [],
       socket: null,
       crypt: null,
+      encrypted: false,
       publicKey: null,
       privateKey: null,
       otherPublicKey: null
@@ -38,14 +39,24 @@ export default {
     },
     send () {
       this.messages.push(this.draft)
-      const message = this.crypt.encrypt(this.draft)
-      this.socket.emitMessage(message)
+
+      if (this.encrypted) {
+        const encryptedMsg = this.crypt.encrypt(this.draft)
+        this.socket.emitMessage(encryptedMsg, true)
+      } else {
+        this.socket.emitMessage(this.draft, false)
+      }
+
       this.draft = ''
     },
     recieve (msg) {
       if (msg.sender !== this.socket.getUserId()) {
-        const decryptedMsg = this.crypt.decrypt(msg.content)
-        this.messages.push(decryptedMsg)
+        if (msg.encrypted) {
+          const decryptedMsg = this.crypt.decrypt(msg.content)
+          this.messages.push(decryptedMsg)
+        } else {
+          this.messages.push(msg.content)
+        }
       }
     }
   }

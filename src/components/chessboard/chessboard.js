@@ -39,6 +39,9 @@ export default {
     /** Return 'w' or 'b' if it is white or black's turn respectively */
     turn () {
       return this.chessGame.getTurn()
+    },
+    isActive () {
+      return (this.side = this.chessGame.getTurn())
     }
   },
   watch: {
@@ -96,7 +99,9 @@ export default {
 
     /** Recieve a new pgn, and sync the displayed board to it */
     syncToPgn (newPgn) {
-        // Generate a new game with the new pgn
+      this.selectedIndex = -1
+      this.availableMoves = {}
+
       const newGame = new ChessGame(newPgn)
 
       // Get the histories for the two games
@@ -194,14 +199,16 @@ export default {
 
     /** On-click for square, select square or try move if suqare is selected  */
     squareSelected (index) {
-      this.availableMoves = {}
-      if (this.selectedIndex === index) {
-        this.selectedIndex = -1
-      } else if (this.selectedIndex > 0) {
-        this.movePiece(this.selectedIndex, index)
-      } else {
-        this.selectedIndex = index
-        this.displayAvailableMoves()
+      if (this.isActive) {
+        this.availableMoves = {}
+        if (this.selectedIndex === index) {
+          this.selectedIndex = -1
+        } else if (this.selectedIndex > 0) {
+          this.movePiece(this.selectedIndex, index)
+        } else {
+          this.selectedIndex = index
+          this.displayAvailableMoves()
+        }
       }
     }
   }

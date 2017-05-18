@@ -43,12 +43,12 @@ export default {
 
       if (this.twoplayer) {
         setTimeout(this.swapSides, 1000)
+      } else if (this.game.turn() === 'b') {
+        this.ai.getBestMove(this.game).then((move) => {
+          console.log(move)
+          this.move(move)
+        })
       }
-
-      this.ai.getBestMove(this.game).then((move) => {
-        console.log(move)
-        this.move(move)
-      })
     },
     swapSides () {
       if (this.side === 'w') {

@@ -1,8 +1,9 @@
 import socketio from 'socket.io-client'
 
 export default class {
-  constructor (userid, url = 'http://localhost:3000') {
+  constructor (userid, encrypted = true, url = 'http://localhost:3000') {
     this.userid = userid
+    this.encrypted = encrypted
     this.socket = socketio(url)
   }
 
@@ -13,10 +14,11 @@ export default class {
     })
   }
 
-  emitMessage (message) {
+  emitMessage (message, encrypted) {
     this.socket.emit('message', {
       content: message,
-      sender: this.userid
+      sender: this.userid,
+      encrypted
     })
   }
 

@@ -1,5 +1,7 @@
+const chess = require('chess.js').Chess
+
 /** adapted from https://github.com/lhartikk/simple-chess-ai */
-export default class {
+class Ai {
   constructor () {
     this.initializeEvalGrids()
   }
@@ -10,7 +12,7 @@ export default class {
     }
 
     this.positionCount = 0
-    let depth = 2
+    let depth = 3
 
     let d = new Date().getTime()
     let bestMove = this.minimaxRoot(depth, game, true)
@@ -40,8 +42,6 @@ export default class {
         bestMoveFound = newGameMove
       }
     }
-
-    console.log('bestmove', bestMove)
     return bestMoveFound
   }
 
@@ -200,3 +200,12 @@ export default class {
     throw new Error('Unknown piece type: ' + piece.type)
   }
 }
+
+const game = chess()
+const ai = new Ai()
+
+while (!game.game_over()) {
+  game.move(ai.getBestMove(game))
+}
+
+
