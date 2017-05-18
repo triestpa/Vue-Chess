@@ -3,22 +3,13 @@ import socketio from 'socket.io-client'
 export default class {
   constructor (userid, encrypted = true, url = 'http://localhost:3000') {
     this.userid = userid
-    this.encrypted = encrypted
     this.socket = socketio(url)
   }
 
-  emitPublicKey (publicKey) {
-    this.socket.emit('publickey', {
-      publicKey,
+  emitMove (move) {
+    this.socket.emit('newmove', {
+      move: move,
       sender: this.userid
-    })
-  }
-
-  emitMessage (message, encrypted) {
-    this.socket.emit('message', {
-      content: message,
-      sender: this.userid,
-      encrypted
     })
   }
 
@@ -34,12 +25,8 @@ export default class {
     this.socket.on('disconnect', cb)
   }
 
-  onPublicKeyRecieved (cb) {
-    this.socket.on('publickey', cb)
-  }
-
-  onMessageRecieved (cb) {
-    this.socket.on('message', cb)
+  onNewMove (cb) {
+    this.socket.on('newmove', cb)
   }
 
   getUserId () {

@@ -1,8 +1,9 @@
-import Socket from '../../services/socket'
+import Socket from '../../services/chat-socket'
 import Crypt from '../../services/crypt'
 
 export default {
-  name: 'chass',
+  name: 'chess',
+  props: 'userid',
   data () {
     return {
       draft: '',
@@ -16,8 +17,7 @@ export default {
     }
   },
   created () {
-    const userid = Math.floor(Math.random() * 1000)
-    this.socket = new Socket(userid)
+    this.socket = new Socket(this.userid)
     this.crypt = new Crypt()
 
     this.socket.onConnected(() => this.sendPublicKey())

@@ -4,6 +4,7 @@
 import Chessboard from '../../components/chessboard/chessboard.vue'
 import Chat from '../../components/chat/chat.vue'
 import Ai from '../../services/ai'
+import Socket from '../../services/chess-socket'
 
 import Chess from 'chess.js'
 
@@ -17,6 +18,7 @@ export default {
     return {
       pgn: undefined,
       ai: null,
+      userid: Math.floor(Math.random() * 1000),
       side: 'w',
       twoplayer: false,
       iconDir: 'static/icons/'
@@ -32,6 +34,12 @@ export default {
   created () {
     this.newGame()
     this.ai = new Ai()
+    this.socket = new Socket(this.userid)
+
+    this.socket.onNewMove((newMove) => {
+      console.log(newMove)
+      this.move(newMove.move)
+    })
   },
   methods: {
     newGame () {
@@ -43,11 +51,15 @@ export default {
 
       if (this.twoplayer) {
         setTimeout(this.swapSides, 1000)
-      } else if (this.game.turn() === 'b') {
-        this.ai.getBestMove(this.game).then((move) => {
-          console.log(move)
-          this.move(move)
-        })
+      } else if (this.game.turn() !== this.side) {
+        // this.ai.getBestMove(this.game).then((move) => {
+        //   console.log(move)
+        //   this.move(move)
+        // })
+
+        const history = this.game.history()
+        const lastMove = history[history.length - 1]
+        this.socket.emitMove(lastMove)
       }
     },
     swapSides () {
@@ -60,11 +72,11 @@ export default {
     randomMove () {
       const moves = this.game.moves()
       const move = moves[Math.floor(Math.random() * (moves.length - 1))]
-      this.game.move(move)
-      this.pgn = this.game.pgn()
+      this.move(move)
     },
     move (move) {
-      this.game.move(move)
+      const result = this.game.move(move, {sloppy: true})
+      console.log(result)
       this.pgn = this.game.pgn()
     },
     reset () {
