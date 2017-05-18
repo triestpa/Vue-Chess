@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="264px" height="264px" viewBox="0 0 264 264" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 44 (41411) - http://www.bohemiancoding.com/sketch -->
     <title>wb</title>
     <desc>Created with Sketch.</desc>
     <defs>
         <circle id="path-1" cx="128" cy="128" r="128"></circle>
-        <filter x="-4.5%" y="-4.5%" width="109.0%" height="109.0%" filterUnits="objectBoundingBox" id="filter-2">
-            <feMorphology radius="10" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
-            <feGaussianBlur stdDeviation="1.5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
-            <feOffset dx="0" dy="2" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+        <filter x="-4.3%" y="-4.3%" width="108.6%" height="108.6%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="8" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="2.5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
             <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
         </filter>
         <path d="M167.946773,174.980296 C155.111223,163.593921 145.381048,142.063322 145.381048,125.087272 L145.381048,122.809998 L164.841398,122.809998 L164.841398,109.353373 L149.107498,105.212873 C151.384773,100.244273 152.626923,94.6545984 152.626923,88.6508736 C152.626923,80.9909488 150.556673,73.538049 146.623198,67.7413492 C141.861623,60.4954744 138.963273,53.0425746 138.135173,45.5896748 L137.514099,40 L119.088874,40 L118.467799,45.5896748 C117.639699,53.0425746 114.741349,60.4954744 109.979774,67.7413492 C106.046299,73.538049 103.976049,80.9909488 103.976049,88.6508736 C103.976049,94.6545984 105.218199,100.244273 107.495474,105.212873 L91.7615749,109.146348 L91.7615749,122.602973 L111.221924,122.602973 L111.221924,125.087272 C111.221924,142.063322 101.49175,163.386896 88.449175,174.980296 L87,176.429471 L87,215.143145 L169.809998,215.143145 L169.809998,178.706746 L169.809998,176.429471 L167.946773,174.980296 Z" id="path-3"></path>
-        <filter x="-9.7%" y="-4.6%" width="119.3%" height="109.1%" filterUnits="objectBoundingBox" id="filter-4">
-            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
-            <feGaussianBlur stdDeviation="5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
-            <feOffset dx="0" dy="5" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+        <filter x="-21.1%" y="-10.0%" width="142.3%" height="120.0%" filterUnits="objectBoundingBox" id="filter-4">
+            <feMorphology radius="10" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="7.5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="5" dy="10" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
             <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
         </filter>
@@ -24,12 +24,12 @@
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="wb" transform="translate(4.000000, 4.000000)">
             <g id="Oval">
-                <use fill="#303030" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="#EAEAEA" fill-rule="evenodd" xlink:href="#path-1"></use>
                 <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                <use stroke="#EAEAEA" stroke-width="8" xlink:href="#path-1"></use>
+                <use stroke="#303030" stroke-width="8" xlink:href="#path-1"></use>
             </g>
             <g id="bb" fill-rule="nonzero">
-                <use fill="#EAEAEA" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <use fill="#303030" fill-rule="evenodd" xlink:href="#path-3"></use>
                 <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
             </g>
         </g>

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="264px" height="264px" viewBox="0 0 264 264" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <!-- Generator: Sketch 44 (41411) - http://www.bohemiancoding.com/sketch -->
     <title>br</title>
     <desc>Created with Sketch.</desc>
     <defs>
         <circle id="path-1" cx="128" cy="128" r="128"></circle>
-        <filter x="-4.3%" y="-4.3%" width="108.6%" height="108.6%" filterUnits="objectBoundingBox" id="filter-2">
-            <feMorphology radius="8" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
-            <feGaussianBlur stdDeviation="2.5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
-            <feOffset dx="0" dy="1" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+        <filter x="-4.5%" y="-4.5%" width="109.0%" height="109.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feMorphology radius="10" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="1.5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="2" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
             <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
         </filter>
         <polygon id="path-3" points="153.1925 107.065 165.02 97.52 165.02 61 91.98 61 91.98 97.52 103.8075 107.065 99.6575 150.225 87 155.205 87 195.045 170 195.045 170 155.205 157.3425 150.225"></polygon>
-        <filter x="-21.1%" y="-13.1%" width="142.2%" height="126.1%" filterUnits="objectBoundingBox" id="filter-4">
-            <feMorphology radius="10" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
-            <feGaussianBlur stdDeviation="7.5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
-            <feOffset dx="5" dy="10" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+        <filter x="-9.6%" y="-6.0%" width="119.3%" height="111.9%" filterUnits="objectBoundingBox" id="filter-4">
+            <feMorphology radius="1" operator="erode" in="SourceAlpha" result="shadowSpreadInner1"></feMorphology>
+            <feGaussianBlur stdDeviation="5" in="shadowSpreadInner1" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="5" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
             <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
         </filter>
@@ -24,12 +24,12 @@
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="br" transform="translate(4.000000, 4.000000)">
             <g id="Oval">
-                <use fill="#EAEAEA" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="#303030" fill-rule="evenodd" xlink:href="#path-1"></use>
                 <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-                <use stroke="#303030" stroke-width="8" xlink:href="#path-1"></use>
+                <use stroke="#EAEAEA" stroke-width="8" xlink:href="#path-1"></use>
             </g>
             <g fill-rule="nonzero">
-                <use fill="#303030" fill-rule="evenodd" xlink:href="#path-3"></use>
+                <use fill="#EAEAEA" fill-rule="evenodd" xlink:href="#path-3"></use>
                 <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
             </g>
         </g>
