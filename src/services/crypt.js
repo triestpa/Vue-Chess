@@ -7,6 +7,8 @@ export default class {
     this.privateKey = this.crypt.getPrivateKey()
     this.originPublicKey = this.crypt.getPublicKey()
     this.otherPublicKey = this.crypt.getPublicKey()
+
+    console.log('keys', { privateKey: this.privateKey, publicKey: this.originPublicKey })
   }
 
   setPublicKey (key) {
