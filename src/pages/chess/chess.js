@@ -2,7 +2,6 @@
 // outputs -> onmove, ongameover, oncapture, onstatechange
 
 import Chessboard from '../../components/chessboard/chessboard.vue'
-import Chat from '../../components/chat/chat.vue'
 import Ai from '../../services/ai'
 import Socket from '../../services/chess-socket'
 
@@ -11,8 +10,7 @@ import Chess from 'chess.js'
 export default {
   name: 'chess',
   components: {
-    Chessboard,
-    Chat
+    Chessboard
   },
   data () {
     return {
