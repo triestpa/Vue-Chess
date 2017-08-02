@@ -5,7 +5,7 @@ export default class {
     this.baseurl = url
   }
 
-  getBestMove (fen) {
-    return axios.get(`${this.baseurl}/bestmove`, { params: { fen } })
+  getBestMove (fen, difficulty = 3) {
+    return axios.get(`${this.baseurl}/bestmove`, { params: { fen, difficulty } })
   }
 }

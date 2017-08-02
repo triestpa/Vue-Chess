@@ -29,7 +29,7 @@ export default {
   },
   created () {
     this.newGame()
-    this.stockfishApi = new StockfishApi('http://localhost:3000')
+    this.stockfishApi = new StockfishApi()
     // this.ai = new Ai()
     // this.socket = new Socket(this.userid)
 
