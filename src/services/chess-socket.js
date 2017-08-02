@@ -1,7 +1,7 @@
 import socketio from 'socket.io-client'
 
 export default class {
-  constructor (userid, encrypted = true, url = 'http://localhost:3000') {
+  constructor (userid, encrypted = true, url = 'https://stockfish.patricktriest.com') {
     this.userid = userid
     this.socket = socketio(url)
   }
