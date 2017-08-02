@@ -2,9 +2,8 @@
 // outputs -> onmove, ongameover, oncapture, onstatechange
 
 import Chessboard from '../../components/chessboard/chessboard.vue'
-import Ai from '../../services/ai'
-import Socket from '../../services/chess-socket'
-
+// import Socket from '../../services/chess-socket'
+import StockfishApi from '../../services/stockfish-api'
 import Chess from 'chess.js'
 
 export default {
@@ -15,7 +14,6 @@ export default {
   data () {
     return {
       pgn: undefined,
-      ai: null,
       userid: Math.floor(Math.random() * 1000),
       side: 'w',
       twoplayer: false,
@@ -31,13 +29,14 @@ export default {
   },
   created () {
     this.newGame()
-    this.ai = new Ai()
-    this.socket = new Socket(this.userid)
+    this.stockfishApi = new StockfishApi('http://localhost:3000')
+    // this.ai = new Ai()
+    // this.socket = new Socket(this.userid)
 
-    this.socket.onNewMove((newMove) => {
-      console.log(newMove)
-      this.move(newMove.move)
-    })
+    // this.socket.onNewMove((newMove) => {
+    //   console.log(newMove)
+    //   this.move(newMove.move)
+    // })
   },
   methods: {
     newGame () {
@@ -50,14 +49,13 @@ export default {
       if (this.twoplayer) {
         setTimeout(this.swapSides, 1000)
       } else if (this.game.turn() !== this.side) {
-        // this.ai.getBestMove(this.game).then((move) => {
-        //   console.log(move)
-        //   this.move(move)
-        // })
-
-        const history = this.game.history()
-        const lastMove = history[history.length - 1]
-        this.socket.emitMove(lastMove)
+        this.stockfishApi.getBestMove(this.game.fen()).then(response => {
+          console.log(response)
+          this.move(response.data)
+        })
+        // const history = this.game.history()
+        // const lastMove = history[history.length - 1]
+        // this.socket.emitMove(lastMove)
       }
     },
     swapSides () {
