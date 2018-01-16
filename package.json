@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "axios": "0.16.1",
-    "chess.js": "git@github.com:jhlywa/chess.js.git#master",
+    "chess.js": "jhlywa/chess.js#b2650a3",
     "jsencrypt": "2.3.1",
     "skeleton-css": "2.0.4",
     "socket.io-client": "2.0.1",
